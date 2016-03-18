@@ -25,7 +25,9 @@
     <link href="/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/layouts/layout3/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="styles/material-switch.css" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="/favicon.ico" />
 </head>
@@ -84,13 +86,19 @@
     <script src="/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
     <script src="/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
     <script src="/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
-    <script src="/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="http://underscorejs.org/underscore.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/restangular.js" type="text/javascript"></script>
     <script src="/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
     <script src="/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+    <!--<script src="assets/layouts/layout3/scripts/login.js" type="text/javascript"></script>-->
     <!-- END CORE ANGULARJS PLUGINS -->
     <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
     <script src="/js/main.js" type="text/javascript"></script>
     <script src="/js/directives.js" type="text/javascript"></script>
+    <script src="/js/controllers/LoginController.js"></script>
+    <script src="/js/services/LoginService.js"></script>
+    <script src="/js/services/UserService.js"></script>
     <!-- END APP LEVEL ANGULARJS SCRIPTS -->
     <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
     <script src="/assets/global/scripts/app.min.js" type="text/javascript"></script>

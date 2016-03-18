@@ -7,23 +7,17 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
-    "ngSanitize"
+    "ngSanitize",
+    "restangular"
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         // global configs go here
+
     });
 }]);
-
-
-//MetronicApp.config(['$controllerProvider', function($controllerProvider) {
-//  // this option might be handy for migrating old apps, but please don't use it
-//  // in new ones!
-//  $controllerProvider.allowGlobals();
-//}]);
-
 
 /* Setup global settings */
 MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
@@ -35,13 +29,12 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
             pageBodySolid: false, // solid body color state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        assetsPath: '../assets',
-        globalPath: '../assets/global',
-        layoutPath: '../assets/layouts/layout3',
+        assetsPath: '/assets',
+        globalPath: '/assets/global',
+        layoutPath: '/assets/layouts/layout3'
     };
 
     $rootScope.settings = settings;
-
     return settings;
 }]);
 
@@ -60,27 +53,30 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+MetronicApp.controller('HeaderController', ['$scope', '$rootScope', '$modal', '$log', "$window", "LoginService", "UserService", function($scope, $rootScope, $modal, $log, $window, loginService, userService) {
+    $scope.$on('$includeContentLoaded', function () {
         Layout.initHeader(); // init header
+
+        $scope.user = loginService.init();
+        //$scope.isUserAdmin = false;
+        //$scope.isUserHOD = false;
+        //$scope.isUserInstructor = false;
+        //$scope.isUserStudent = false;
+        var currentUserPromise = userService.getCurrentUser();
+        if (currentUserPromise != null) {
+            currentUserPromise.then(function(data) {
+                $log.log(data);
+                $rootScope.userDetails = data;
+                //for (var i = 0; i < $rootScope.userDetails.roles.length; i++)
+                //{
+
+                //}
+            }, function(err) {
+                $log.error("Error while calling user details service", err);
+            });
+        }
     });
 }]);
-
-///* Setup Layout Part - Sidebar */
-//MetronicApp.controller('SidebarController', ['$scope', function($scope) {
-//    $scope.$on('$includeContentLoaded', function() {
-//        Layout.initSidebar(); // init sidebar
-//    });
-//}]);
-
-///* Setup Layout Part - Quick Sidebar */
-//MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {    
-//    $scope.$on('$includeContentLoaded', function() {
-//       setTimeout(function(){
-//            QuickSidebar.init(); // init quick sidebar        
-//        }, 2000)
-//    });
-//}]);
 
 /* Setup Layout Part - Sidebar */
 MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
@@ -89,18 +85,37 @@ MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
     });
 }]);
 
-///* Setup Layout Part - Theme Panel */
-//MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {    
-//    $scope.$on('$includeContentLoaded', function() {
-//        Demo.init(); // init theme panel
-//    });
-//}]);
 
 /* Setup Layout Part - Footer */
 MetronicApp.controller('FooterController', ['$scope', function ($scope) {
     $scope.date = new Date();
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
+    });
+}]);
+
+/*Configure Restangular*/
+MetronicApp.config(['RestangularProvider', function(RestangularProvider) {
+    RestangularProvider.setBaseUrl("https://bpdcapisrv.azurewebsites.net/");
+    RestangularProvider.setDefaultHeaders({
+        //'Content-Type': 'application/json'
+        //'X-Requested-With': 'XMLHttpRequest'
+        'Access-Control-Allow-Origin': "http://localhost:52442"
+    });
+    RestangularProvider.setDefaultHttpFields({
+        'withCredentials': false,
+        'cache': false
+    });
+    RestangularProvider.setRestangularFields({
+        id: '_id.$oid'
+    });
+
+    RestangularProvider.setRequestInterceptor(function (elem, operation, what) {
+        if (operation === 'put') {
+            elem._id = undefined;
+            return elem;
+        }
+        return elem;
     });
 }]);
 
@@ -112,16 +127,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
     $stateProvider
         .state('welcome', {
             url: '/',
-            templateUrl: 'views/welcome.html',
-            data: { pageTitle: 'New Request', pageSubTitle: 'Create a new request' },
+            templateUrl: '/views/welcome.html',
+            data: { pageTitle: 'University Management System', pageSubTitle: '' },
             controller: "GeneralPageController",
+            controllerAs: "GeneralCtrl",
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            'js/controllers/GeneralPageController.js'
+                            '/js/controllers/GeneralPageController.js',
+                            '/js/services/LoginService.js',
+                            '/js/services/UserService.js'
                         ]
                     });
                 }]

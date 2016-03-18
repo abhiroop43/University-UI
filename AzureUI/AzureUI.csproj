@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\global\plugins\angularjs\restangular.js" />
+    <Content Include="js\services\UserService.js" />
     <Content Include="packages.config" />
     <Content Include="assets\global\plugins\jquery.min.map" />
     <Content Include="assets\global\plugins\angularjs\angular-cookies.min.js.map" />
@@ -179,6 +180,7 @@
     <Content Include="js\directives.js" />
     <Content Include="js\main.js" />
     <Content Include="js\services\LoginService.js" />
+    <Content Include="styles\material-switch.css" />
     <Content Include="tpl\footer.html" />
     <Content Include="tpl\header.html" />
     <Content Include="tpl\page-head.html" />
@@ -194,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
-    <Folder Include="styles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

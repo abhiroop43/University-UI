@@ -16,11 +16,11 @@
 
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li class="dropdown dropdown-user dropdown-dark">
-                    <!--<a href="javascript:;" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+                    <a href="javascript:;" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true" ng-show="user != null">
                         <img alt="" class="img-circle" src="{{settings.layoutPath}}/img/avatar.png">
-                        <span class="username username-hide-mobile">Nick</span>
-                    </a>-->
-                    <button class="btn btn-block" ng-click="open('sm')">Login</button>
+                        <span class="username username-hide-mobile">{{user.username}}</span>
+                    </a>
+                    <!--<a ng-click="open()" ng-hide="user != null">Login</a>-->
                 </li>
                 <!-- END USER LOGIN DROPDOWN -->
 
@@ -38,8 +38,8 @@
         <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
         <!-- DOC: Remove dropdown-menu-hover and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
         <div class="hor-menu">
-            <ul class="nav navbar-nav">
-                <li class="active">
+            <ul class="nav navbar-nav" ng-if="user != null">
+                <li class="active" ng-if="userDetails.roles.indexOf('Admin') > -1">
                     <a href="#/dashboard.html">Dashboard</a>
                 </li>
                 <li class="menu-dropdown mega-menu-dropdown ">
