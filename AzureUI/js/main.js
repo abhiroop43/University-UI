@@ -96,11 +96,12 @@ MetronicApp.controller('FooterController', ['$scope', function ($scope) {
 
 /*Configure Restangular*/
 MetronicApp.config(['RestangularProvider', function(RestangularProvider) {
-    RestangularProvider.setBaseUrl("https://bpdcapisrv.azurewebsites.net/");
+    //RestangularProvider.setBaseUrl("https://bpdcapisrv.azurewebsites.net/");
+    RestangularProvider.setBaseUrl("http://localhost:90/");
     RestangularProvider.setDefaultHeaders({
-        //'Content-Type': 'application/json'
+        'Content-Type': 'text/plain'
         //'X-Requested-With': 'XMLHttpRequest'
-        'Access-Control-Allow-Origin': "http://localhost:52442"
+        //'Access-Control-Allow-Origin': "*"
     });
     RestangularProvider.setDefaultHttpFields({
         'withCredentials': false,

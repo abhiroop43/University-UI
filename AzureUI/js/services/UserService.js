@@ -6,10 +6,11 @@ MetronicApp.factory("UserService", [
             getCurrentUser: function () {
                 var userCredentials = loginService.init();
                 if (userCredentials != null) {
-                    restangular.setDefaultHttpFields({
-                        "authorization": "bearer " + userCredentials.token
-                    });
+                    //restangular.setDefaultHttpFields({
+                    //    "Authorization": "bearer " + userCredentials.token
+                    //});
                     return restangular.one("api/accounts/user/getcurrentuserdetails").get({}, { "authorization": "bearer " + userCredentials.token });
+                    //return restangular.one("api/departments/getAll").get({}, { "Authorization": "bearer " + userCredentials.token });
                 }
                 return null;
             },
