@@ -1,10 +1,19 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
-
-</body>
-</html>
+﻿<h3>Departments</h3>
+<table class="table table-responsive table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Department Name</th>
+            <th>Created On</th>
+            <th>Updated On</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="dep in DepsCtrl.getAllDeps">
+            <td>{{dep.departmentName}}</td>
+            <td>{{dep.createdOn | date:'dd/MM/yyyy'}}</td>
+            <td>{{dep.updatedOn | date:'dd/MM/yyyy'}}</td>
+            <td>{{dep.isActive}}</td>
+        </tr>
+    </tbody>
+</table>

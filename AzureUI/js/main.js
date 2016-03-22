@@ -65,8 +65,9 @@ MetronicApp.controller('HeaderController', ['$scope', '$rootScope', '$modal', '$
         var currentUserPromise = userService.getCurrentUser();
         if (currentUserPromise != null) {
             currentUserPromise.then(function(data) {
-                //$log.log(data);
-                $rootScope.userDetails = data;
+                $log.debug(data);
+                $scope.userDetails = data;
+                $window.sessionStorage["userDetails"] = JSON.stringify(data);
                 //for (var i = 0; i < $rootScope.userDetails.roles.length; i++)
                 //{
 
@@ -161,9 +162,27 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             name: 'MetronicApp',
                             insertBefore: '#ng_load_plugins_before',
                             files: [
-                                '/js/controllers/UsersController.js',
-                                '/js/services/LoginService.js',
-                                '/js/services/UserService.js'
+                                '/js/controllers/UsersController.js'
+                            ]
+                        });
+                    }
+                ]
+            }
+        })
+        .state('deps', {
+            url: '/deps',
+            templateUrl: '/views/departments.html',
+            data: { pageTitle: 'Department Management', pageSubTitle: 'Manage departments' },
+            controller: "DepsController",
+            controllerAs: "DepsCtrl",
+            resolve: {
+                deps: [
+                    '$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'MetronicApp',
+                            insertBefore: '#ng_load_plugins_before',
+                            files: [
+                                '/js/controllers/DepsController.js'
                             ]
                         });
                     }
