@@ -29,7 +29,9 @@ MetronicApp.controller("LoginController", [
                 }
 
                 $modalInstance.close();
-                $state.reload();
+                //$window.location.reload();
+                //$state.reload();
+                //$state.go("users");
 
             }, function (err) {
                 $log.error("Error occurred, while logging in user", err);

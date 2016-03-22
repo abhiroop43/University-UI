@@ -1,21 +1,20 @@
 ﻿"use strict";
 
-MetronicApp.factory("UserService", [
-    "$log", "Restangular", "LoginService", function ($log, restangular, loginService) {
+MetronicApp.factory("UserService", ["$log", "Restangular", "LoginService", function ($log, Restangular, loginService) {
+        var userCredentials = loginService.init();
+
         return {
             getCurrentUser: function () {
-                var userCredentials = loginService.init();
-                if (userCredentials != null) {
-                    //restangular.setDefaultHttpFields({
-                    //    "Authorization": "bearer " + userCredentials.token
-                    //});
-                    return restangular.one("api/accounts/user/getcurrentuserdetails").get({}, { "authorization": "bearer " + userCredentials.token });
-                    //return restangular.one("api/departments/getAll").get({}, { "Authorization": "bearer " + userCredentials.token });
+                //$log.debug("User credentials", userCredentials);
+                if (userCredentials != null && userCredentials.token != null) {
+                    return Restangular.one("api/accounts/user/getcurrentuserdetails").get({}, { "authorization": "bearer " + userCredentials.token });
                 }
-                return null;
             },
-            getUserDetails: function (username) {
-                $log.log("User Details: " + username);
+            getAllUsers: function () {
+                //$log.debug("User credentials", userCredentials);
+                if (userCredentials != null && userCredentials.token != null) {
+                    return Restangular.all("api/accounts/users").getList({}, { "authorization": "bearer " + userCredentials.token });
+                }
             }
         }
     }

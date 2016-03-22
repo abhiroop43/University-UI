@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\global\plugins\angularjs\restangular.js" />
+    <Content Include="js\controllers\UsersController.js" />
     <Content Include="js\services\UserService.js" />
     <Content Include="packages.config" />
     <Content Include="assets\global\plugins\jquery.min.map" />

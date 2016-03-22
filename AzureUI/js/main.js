@@ -65,7 +65,7 @@ MetronicApp.controller('HeaderController', ['$scope', '$rootScope', '$modal', '$
         var currentUserPromise = userService.getCurrentUser();
         if (currentUserPromise != null) {
             currentUserPromise.then(function(data) {
-                $log.log(data);
+                //$log.log(data);
                 $rootScope.userDetails = data;
                 //for (var i = 0; i < $rootScope.userDetails.roles.length; i++)
                 //{
@@ -129,21 +129,45 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state('welcome', {
             url: '/',
             templateUrl: '/views/welcome.html',
-            data: { pageTitle: 'University Management System', pageSubTitle: '' },
+            data: { pageTitle: 'Welcome', pageSubTitle: '' },
             controller: "GeneralPageController",
             controllerAs: "GeneralCtrl",
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                        files: [
-                            '/js/controllers/GeneralPageController.js',
-                            '/js/services/LoginService.js',
-                            '/js/services/UserService.js'
-                        ]
-                    });
-                }]
+                deps: [
+                    '$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'MetronicApp',
+                            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                            files: [
+                                '/js/controllers/GeneralPageController.js',
+                                '/js/services/LoginService.js',
+                                '/js/services/UserService.js'
+                            ]
+                        });
+                    }
+                ]
+            }
+        })
+        .state('users', {
+            url: '/users',
+            templateUrl: '/views/users.html',
+            data: { pageTitle: 'User Management', pageSubTitle: 'Manage users of the system' },
+            controller: "UsersController",
+            controllerAs: "UsersCtrl",
+            resolve: {
+                deps: [
+                    '$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'MetronicApp',
+                            insertBefore: '#ng_load_plugins_before',
+                            files: [
+                                '/js/controllers/UsersController.js',
+                                '/js/services/LoginService.js',
+                                '/js/services/UserService.js'
+                            ]
+                        });
+                    }
+                ]
             }
         });
 
