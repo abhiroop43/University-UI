@@ -18,7 +18,7 @@ MetronicApp.controller("UsersController", ["$log", "$state", "$window", "UserSer
             $log.debug("Testing get all users", data);
             userVM.getAllUsers = data;
         }, function (err) {
-            $log.error("Error while calling user details service", err);
+            $log.error("Error while calling get all users service", err);
         });
     }
 }]);

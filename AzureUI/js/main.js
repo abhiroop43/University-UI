@@ -100,7 +100,8 @@ MetronicApp.config(['RestangularProvider', function(RestangularProvider) {
     //RestangularProvider.setBaseUrl("https://bpdcapisrv.azurewebsites.net/");
     RestangularProvider.setBaseUrl("http://localhost:90/");
     RestangularProvider.setDefaultHeaders({
-        'Content-Type': 'text/plain'
+        'Content-Type': 'application/json'
+        //'Content-Type': 'text/plain'
         //'X-Requested-With': 'XMLHttpRequest'
         //'Access-Control-Allow-Origin': "*"
     });
@@ -155,6 +156,26 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             data: { pageTitle: 'User Management', pageSubTitle: 'Manage users of the system' },
             controller: "UsersController",
             controllerAs: "UsersCtrl",
+            resolve: {
+                deps: [
+                    '$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'MetronicApp',
+                            insertBefore: '#ng_load_plugins_before',
+                            files: [
+                                '/js/controllers/UsersController.js'
+                            ]
+                        });
+                    }
+                ]
+            }
+        })
+        .state('users.detail', {
+            url: '/:userId',
+            templateUrl: '/views/userdetails.html',
+            data: { pageTitle: 'User Management', pageSubTitle: 'Manage users of the system' },
+            controller: "UserDetailsController",
+            controllerAs: "UserDetailsCtrl",
             resolve: {
                 deps: [
                     '$ocLazyLoad', function($ocLazyLoad) {

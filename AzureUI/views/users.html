@@ -14,7 +14,12 @@
         <td>{{user.userName}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.joinDate | date:'dd/MM/yyyy'}}</td>
+        <td>{{user.joinDate | date:'MM/dd/yyyy'}}</td>
+        <td><a ui-sref="users.detail({userId: user.id})">View Details</a></td>
     </tr>
     </tbody>
 </table>
+
+<div ui-view>
+    
+</div>
